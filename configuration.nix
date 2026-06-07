@@ -45,7 +45,7 @@
     LC_NUMERIC = "fr_FR.UTF-8";
     LC_PAPER = "fr_FR.UTF-8";
     LC_TELEPHONE = "fr_FR.UTF-8";
-    LC_TIME = "fr_FR.UTF-8";
+    LC_TIME = "en_GB.UTF-8";
   };
 
   # Configure keymap in X11
@@ -69,9 +69,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+     neovim
      wget
-     alacritty
+     kitty
      waybar
      rofi
      hyprpaper
@@ -111,11 +111,16 @@
      imv
      mpv
      git
+     vencord
+     telegram-desktop
+     signal-desktop
+     whatsapp-electron
+     unzip
+     rmpc
      thunderbird
      protonmail-bridge
      killall
      noto-fonts
-     stow
      kanagawa-gtk-theme
   ];
 

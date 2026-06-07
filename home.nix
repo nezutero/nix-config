@@ -133,6 +133,7 @@ in
         "hypr".source       = link "hypr";
         "waybar".source     = link "waybar";
         "alacritty".source  = link "alacritty";
+        "ghostty".source    = link "ghostty";
         "dunst".source      = link "dunst";
         "rofi".source       = link "rofi";
         "kitty".source      = link "kitty";
