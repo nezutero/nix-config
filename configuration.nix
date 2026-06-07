@@ -85,7 +85,6 @@
      grim
      slurp
      gimp
-     nwg-look
      wev
      tmux
      brightnessctl
@@ -111,17 +110,27 @@
      imv
      mpv
      git
-     vencord
+     gcc
+     rustc
+     python3
+     cargo
+     spotify
+     pass
+     gnupg
+     pinentry-curses
      telegram-desktop
      signal-desktop
      whatsapp-electron
+     vesktop
+     nodejs
+     go
      unzip
      rmpc
      thunderbird
      protonmail-bridge
      killall
-     noto-fonts
      kanagawa-gtk-theme
+     tor-browser
   ];
 
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -131,21 +140,33 @@ environment.variables = {
   XCURSOR_SIZE  = "24";
 };
 
-fonts.packages = with pkgs; [
-  nerd-fonts.jetbrains-mono    # NixOS 24.11+
-  jetbrains-mono               # non-nerd version (fallback)
-];
+fonts = {
+  packages = with pkgs; [
+    inter
+    noto-fonts
+    noto-fonts-cjk-sans
+    nerd-fonts.jetbrains-mono
+    jetbrains-mono
+  ];
+
+  fontconfig = {              # ← inside fonts, not top-level
+    defaultFonts = {
+      sansSerif = [ "Inter" ];
+      serif     = [ "Noto Serif" ];
+      monospace = [ "JetBrainsMono Nerd Font Mono" ];
+    };
+  };
+};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
 programs.hyprland.enable = true;
 programs.zsh.enable = true;
-programs.ssh.startAgent = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+};
 
   # List services that you want to enable:
 
