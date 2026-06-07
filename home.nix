@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
 dotfiles = "${config.home.homeDirectory}/dotfiles";
@@ -8,6 +8,41 @@ in
     home.username      = "nezutero";
     home.homeDirectory = "/home/nezutero";
     home.stateVersion  = "26.05";
+
+    home.activation.bootstrap = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # ── SSH key ──────────────────────────────────────────────────
+    if [ ! -f "${config.home.homeDirectory}/.ssh/id_ed25519" ]; then
+      mkdir -p "${config.home.homeDirectory}/.ssh"
+      chmod 700 "${config.home.homeDirectory}/.ssh"
+
+      ${pkgs.openssh}/bin/ssh-keygen \
+        -t ed25519 \
+        -C "me@nezutero.dev" \
+        -f "${config.home.homeDirectory}/.ssh/id_ed25519" \
+        -N ""
+
+      echo ""
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      echo "  SSH key generated — add to GitHub:"
+      echo "  https://github.com/settings/ssh/new"
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      cat "${config.home.homeDirectory}/.ssh/id_ed25519.pub"
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    fi
+
+    # ── Repos (HTTPS, no auth needed for public repos) ───────────
+    if [ ! -d "${config.home.homeDirectory}/dotfiles" ]; then
+      ${pkgs.git}/bin/git clone \
+        https://github.com/nezutero/dotfiles.git \
+        "${config.home.homeDirectory}/dotfiles"
+    fi
+
+    if [ ! -d "${config.home.homeDirectory}/nvim" ]; then
+      ${pkgs.git}/bin/git clone \
+        https://github.com/nezutero/nvim.git \
+        "${config.home.homeDirectory}/nvim"
+    fi
+  '';
 
     home.sessionPath = [
         "$HOME/.local/bin"
