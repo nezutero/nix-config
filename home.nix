@@ -10,39 +10,53 @@ in
     home.stateVersion  = "26.05";
 
     home.activation.bootstrap = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    # ── SSH key ──────────────────────────────────────────────────
-    if [ ! -f "${config.home.homeDirectory}/.ssh/id_ed25519" ]; then
-      mkdir -p "${config.home.homeDirectory}/.ssh"
-      chmod 700 "${config.home.homeDirectory}/.ssh"
+        # ── SSH key ──────────────────────────────────────────────────
+        if [ ! -f "${config.home.homeDirectory}/.ssh/id_ed25519" ]; then
+            mkdir -p "${config.home.homeDirectory}/.ssh"
+                chmod 700 "${config.home.homeDirectory}/.ssh"
 
-      ${pkgs.openssh}/bin/ssh-keygen \
-        -t ed25519 \
-        -C "me@nezutero.dev" \
-        -f "${config.home.homeDirectory}/.ssh/id_ed25519" \
-        -N ""
+                ${pkgs.openssh}/bin/ssh-keygen \
+                -t ed25519 \
+                -C "me@nezutero.dev" \
+                -f "${config.home.homeDirectory}/.ssh/id_ed25519" \
+                -N ""
 
-      echo ""
-      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      echo "  SSH key generated — add to GitHub:"
-      echo "  https://github.com/settings/ssh/new"
-      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      cat "${config.home.homeDirectory}/.ssh/id_ed25519.pub"
-      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    fi
+                echo ""
+                echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+                echo "  SSH key generated — add to GitHub:"
+                echo "  https://github.com/settings/ssh/new"
+                echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+                cat "${config.home.homeDirectory}/.ssh/id_ed25519.pub"
+                echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+                fi
 
-    # ── Repos (HTTPS, no auth needed for public repos) ───────────
-    if [ ! -d "${config.home.homeDirectory}/dotfiles" ]; then
-      ${pkgs.git}/bin/git clone \
-        https://github.com/nezutero/dotfiles.git \
-        "${config.home.homeDirectory}/dotfiles"
-    fi
+                # ── Repos (HTTPS, no auth needed for public repos) ───────────
+                if [ ! -d "${config.home.homeDirectory}/dotfiles" ]; then
+                    ${pkgs.git}/bin/git clone \
+                        https://github.com/nezutero/dotfiles.git \
+                        "${config.home.homeDirectory}/dotfiles"
+                fi
 
-    if [ ! -d "${config.home.homeDirectory}/nvim" ]; then
-      ${pkgs.git}/bin/git clone \
-        https://github.com/nezutero/nvim.git \
-        "${config.home.homeDirectory}/nvim"
-    fi
-  '';
+                if [ ! -d "${config.home.homeDirectory}/nvim" ]; then
+                    ${pkgs.git}/bin/git clone \
+                        https://github.com/nezutero/nvim.git \
+                        "${config.home.homeDirectory}/nvim"
+                fi
+                '';
+
+    home.activation.zenBrowser = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        ZEN_PROFILE="$HOME/.config/zen/zr7hisqa.Default Profile"
+
+        if [ -d "$ZEN_PROFILE" ]; then
+            mkdir -p "$ZEN_PROFILE/chrome"
+
+                ln -sf "$HOME/dotfiles/other/zen/user.js" \
+                "$ZEN_PROFILE/user.js"
+
+                ln -sf "$HOME/dotfiles/other/zen/chrome/userChrome.css" \
+                "$ZEN_PROFILE/chrome/userChrome.css"
+                fi
+                '';
 
     home.sessionPath = [
         "$HOME/.local/bin"
@@ -115,16 +129,16 @@ in
     programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
-            settings = {
-                "*" = {
-                    AddKeysToAgent = "yes";
-                };
-                "github.com" = {
-                    HostName     = "github.com";
-                    User         = "git";
-                    IdentityFile = "~/.ssh/id_ed25519";
-                };
+        settings = {
+            "*" = {
+                AddKeysToAgent = "yes";
             };
+            "github.com" = {
+                HostName     = "github.com";
+                User         = "git";
+                IdentityFile = "~/.ssh/id_ed25519";
+            };
+        };
     };
 
 # points symlinks -> ~/dotfiles
@@ -142,5 +156,30 @@ in
         "yazi".source       = link "yazi";
         "imv".source        = link "imv";
         "fastfetch".source  = link "fastfetch";
+    };
+
+    gtk = {
+        enable = true;
+
+        font = {
+            name = "Inter";
+            size = 12;
+        };
+
+        theme = {
+            name = "Kanagawa-BL";
+            package = pkgs.kanagawa-gtk-theme;
+        };
+
+        iconTheme = {
+            name = "Gruvbox-Plus-Dark";
+            package = pkgs.gruvbox-plus-icons;
+        };
+
+        cursorTheme = {
+            name = "Adwaita";
+            package = pkgs.adwaita-icon-theme;
+            size = 24;
+        };
     };
 }
