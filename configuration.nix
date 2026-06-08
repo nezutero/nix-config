@@ -2,13 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -31,9 +36,9 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.supportedLocales = [
-	  "en_US.UTF-8/UTF-8"
-	  "en_GB.UTF-8/UTF-8"
-	  "fr_FR.UTF-8/UTF-8"
+    "en_US.UTF-8/UTF-8"
+    "en_GB.UTF-8/UTF-8"
+    "fr_FR.UTF-8/UTF-8"
   ];
 
   i18n.extraLocaleSettings = {
@@ -58,9 +63,12 @@
   users.users."nezutero" = {
     isNormalUser = true;
     description = "nezutero";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -69,104 +77,129 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim
-     wget
-     kitty
-     waybar
-     rofi
-     hyprpaper
-     dunst
-     keepassxc
-     btop
-     hypridle
-     hyprlock
-     hyprsunset
-     wl-clipboard
-     grim
-     slurp
-     gimp
-     wev
-     tmux
-     brightnessctl
-     cliphist
-     yazi
-     ncdu
-     docker
-     pavucontrol
-     fastfetch
-     imagemagick
-     fzf
-     eza
-     bat
-     rofi-bluetooth
-     anki
-     jetbrains-mono
-     gruvbox-material-gtk-theme
-     gruvbox-plus-icons
-     zsh
-     fd
-     adwaita-icon-theme
-     ripgrep
-     imv
-     mpv
-     git
-     gcc
-     rustc
-     python3
-     cargo
-     spotify
-     pass
-     gnupg
-     pinentry-curses
-     telegram-desktop
-     signal-desktop
-     whatsapp-electron
-     vesktop
-     nodejs
-     go
-     unzip
-     rmpc
-     thunderbird
-     protonmail-bridge
-     killall
-     kanagawa-gtk-theme
-     tor-browser
-  ];
-
-nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-environment.variables = {
-  XCURSOR_THEME = "Adwaita";
-  XCURSOR_SIZE  = "24";
-};
-
-fonts = {
-  packages = with pkgs; [
-    inter
-    noto-fonts
-    noto-fonts-cjk-sans
-    nerd-fonts.jetbrains-mono
+    neovim
+    wget
+    kitty
+    waybar
+    rofi
+    hyprpaper
+    dunst
+    keepassxc
+    btop
+    hypridle
+    hyprlock
+    hyprsunset
+    wl-clipboard
+    grim
+    slurp
+    gimp
+    wev
+    tmux
+    brightnessctl
+    cliphist
+    yazi
+    ncdu
+    docker
+    pavucontrol
+    fastfetch
+    imagemagick
+    fzf
+    eza
+    bat
+    rofi-bluetooth
+    anki
     jetbrains-mono
+    gruvbox-material-gtk-theme
+    gruvbox-plus-icons
+    zsh
+    fd
+    adwaita-icon-theme
+    ripgrep
+    imv
+    mpv
+    git
+    tuigreet
+    gcc
+    rustc
+    python3
+    cargo
+    spotify
+    pass
+    gnupg
+    pinentry-curses
+    telegram-desktop
+    signal-desktop
+    whatsapp-electron
+    vesktop
+    nodejs
+    go
+    unzip
+    rmpc
+    thunderbird
+    protonmail-bridge
+    killall
+    kanagawa-gtk-theme
+    tor-browser
   ];
 
-  fontconfig = {              # ← inside fonts, not top-level
-    defaultFonts = {
-      sansSerif = [ "Inter" ];
-      serif     = [ "Noto Serif" ];
-      monospace = [ "JetBrainsMono Nerd Font Mono" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  environment.variables = {
+    XCURSOR_THEME = "Adwaita";
+    XCURSOR_SIZE = "24";
+  };
+
+  fonts = {
+    packages = with pkgs; [
+      inter
+      noto-fonts
+      noto-fonts-cjk-sans
+      nerd-fonts.jetbrains-mono
+      jetbrains-mono
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        sansSerif = [ "Inter" ];
+        serif = [ "Noto Serif" ];
+        monospace = [ "JetBrainsMono Nerd Font Mono" ];
+      };
     };
   };
-};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-programs.hyprland.enable = true;
-programs.zsh.enable = true;
-programs.gnupg.agent = {
+  programs.hyprland.enable = true;
+  programs.zsh.enable = true;
+  programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-};
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  nix.optimise = {
+    automatic = true;
+    dates = [ "weekly" ];
+  };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+        user = "greeter";
+      };
+    };
+  };
 
   # List services that you want to enable:
 
