@@ -53,6 +53,20 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
+  services.nextdns = {
+    enable = true;
+    arguments = [
+      "-config"
+      ""
+    ];
+  };
+
+  # Disable resolved to avoid port conflicts
+  services.resolved.enable = false;
+
+  # Point DNS to the local NextDNS proxy
+  networking.nameservers = [ "127.0.0.1" ];
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
