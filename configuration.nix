@@ -113,7 +113,7 @@
     cliphist
     yazi
     ncdu
-    docker
+    podman
     pavucontrol
     fastfetch
     imagemagick
@@ -132,18 +132,19 @@
     imv
     mpv
     git
+    docker
+    distrobox
+    calibre
     tuigreet
     gcc
     rustc
     python3
     cargo
-    spotify
     pass
     gnupg
     pinentry-curses
     telegram-desktop
     signal-desktop
-    whatsapp-electron
     vesktop
     nodejs
     go
@@ -214,6 +215,10 @@
       };
     };
   };
+
+  virtualisation.podman.enable = true;
+
+  # services.udisks2.enable = true;
 
   # List services that you want to enable:
 
