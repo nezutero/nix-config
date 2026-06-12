@@ -77,8 +77,8 @@ in
     EDITOR = "nvim";
     GIT_EDITOR = "nvim";
     VISUAL = "nvim";
-    TERMINAL = "alacritty";
-    BROWSER = "zen-browser";
+    TERMINAL = "kitty";
+    BROWSER = "zen-beta";
   };
 
   programs.zsh = {
@@ -177,14 +177,27 @@ in
     "yazi".source = link "yazi";
     "imv".source = link "imv";
     "fastfetch".source = link "fastfetch";
+    "rmpc".source = link "rmpc";
   };
 
   services.mpd = {
     enable = true;
-    musicDirectory = "${config.home.homeDirectory}/music";
+
+    musicDirectory = "/home/nezutero/music";
+
     extraConfig = ''
-      mixer_type "software"
+      restore_paused "no"
+
+      audio_output {
+        type "pipewire"
+        name "PipeWire Sound Server"
+      }
     '';
+
+    network = {
+      listenAddress = "127.0.0.1";
+      port = 6600;
+    };
   };
 
   programs.rmpc = {
