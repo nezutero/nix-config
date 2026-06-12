@@ -13,6 +13,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./secrets.nix
   ];
 
   # Bootloader.
@@ -57,7 +58,7 @@
     enable = true;
     arguments = [
       "-config"
-      ""
+      "bd327e"
     ];
   };
 
@@ -96,9 +97,11 @@
     kitty
     waybar
     rofi
+    rofi-pass-wayland
+    passExtensions.pass-otp
+    oath-toolkit
     hyprpaper
     dunst
-    keepassxc
     btop
     hypridle
     hyprlock
@@ -121,7 +124,6 @@
     eza
     bat
     rofi-bluetooth
-    anki
     jetbrains-mono
     gruvbox-material-gtk-theme
     gruvbox-plus-icons
@@ -132,9 +134,11 @@
     imv
     mpv
     git
+    keepassxc
+    weechat
+    liferea
     docker
     distrobox
-    calibre
     tuigreet
     gcc
     rustc
@@ -165,6 +169,8 @@
   environment.variables = {
     XCURSOR_THEME = "Adwaita";
     XCURSOR_SIZE = "24";
+    PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
+    PASSWORD_STORE_EXTENSIONS_DIR = "/run/current-system/sw/lib/password-store/extensions/";
   };
 
   fonts = {
@@ -210,7 +216,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
         user = "greeter";
       };
     };
