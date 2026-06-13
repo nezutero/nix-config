@@ -97,9 +97,13 @@
     kitty
     waybar
     rofi
-    rofi-pass-wayland
-    passExtensions.pass-otp
-    oath-toolkit
+    wtype
+    (pass.withExtensions (
+      exts: with exts; [
+        pass-otp
+      ]
+    ))
+    jq
     hyprpaper
     dunst
     btop
@@ -134,7 +138,6 @@
     imv
     mpv
     git
-    keepassxc
     weechat
     liferea
     docker
@@ -144,7 +147,6 @@
     rustc
     python3
     cargo
-    pass
     gnupg
     pinentry-curses
     telegram-desktop
