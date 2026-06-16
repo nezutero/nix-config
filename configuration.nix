@@ -226,6 +226,13 @@
 
   virtualisation.podman.enable = true;
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+    icu
+  ];
+
   # services.udisks2.enable = true;
 
   # List services that you want to enable:
