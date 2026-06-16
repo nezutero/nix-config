@@ -92,7 +92,6 @@ in
         "git"
         "fzf"
         "z"
-        "tmux"
       ];
       theme = "robbyrussell";
     };
