@@ -151,7 +151,6 @@
     pinentry-curses
     telegram-desktop
     signal-desktop
-    vesktop
     nodejs
     go
     unzip
