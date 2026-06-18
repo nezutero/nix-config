@@ -138,8 +138,6 @@
     imv
     mpv
     git
-    weechat
-    liferea
     docker
     distrobox
     tuigreet
