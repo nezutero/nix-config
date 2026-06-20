@@ -97,6 +97,8 @@
     kitty
     waybar
     rofi
+    zbar
+    libnotify
     wtype
     (pass.withExtensions (
       exts: with exts; [
@@ -138,6 +140,9 @@
     imv
     mpv
     git
+    obs-studio
+    tree
+    krita
     docker
     distrobox
     tuigreet
