@@ -130,6 +130,8 @@
     eza
     bat
     rofi-bluetooth
+    bluez
+    bluez-tools
     jetbrains-mono
     gruvbox-material-gtk-theme
     gruvbox-plus-icons
@@ -234,6 +236,9 @@
     zlib
     icu
   ];
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # services.udisks2.enable = true;
 
