@@ -143,6 +143,7 @@
     mpv
     git
     obs-studio
+    onlyoffice-desktopeditors
     tree
     krita
     docker
