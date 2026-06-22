@@ -177,6 +177,7 @@ in
     "imv".source = link "imv";
     "fastfetch".source = link "fastfetch";
     "rmpc".source = link "rmpc";
+    "zathura".source = link "zathura";
   };
 
   services.mpd = {

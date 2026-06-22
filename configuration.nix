@@ -142,6 +142,7 @@
     imv
     mpv
     git
+    zathura
     obs-studio
     onlyoffice-desktopeditors
     tree
