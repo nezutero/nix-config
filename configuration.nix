@@ -145,7 +145,6 @@
     obs-studio
     onlyoffice-desktopeditors
     tree
-    krita
     docker
     distrobox
     tuigreet
