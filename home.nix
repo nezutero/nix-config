@@ -41,12 +41,6 @@ in
                     https://github.com/nezutero/dotfiles.git \
                     "${config.home.homeDirectory}/dotfiles"
             fi
-
-            if [ ! -d "${config.home.homeDirectory}/nvim" ]; then
-                ${pkgs.git}/bin/git clone \
-                    https://github.com/nezutero/nvim.git \
-                    "${config.home.homeDirectory}/nvim"
-            fi
   '';
 
   home.activation.zenBrowser = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -163,7 +157,7 @@ in
 
   # points symlinks -> ~/dotfiles
   xdg.configFile = {
-    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nvim";
+    "nvim".source = link "nvim";
     "hypr".source = link "hypr";
     "waybar".source = link "waybar";
     "alacritty".source = link "alacritty";
