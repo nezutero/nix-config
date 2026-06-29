@@ -1,19 +1,22 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
 }:
 
+
+let
+    nextdnsId = lib.strings.removeSuffix "\n" (builtins.readFile ./nextdns-id);
+in
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./secrets.nix
   ];
 
   # Bootloader.
@@ -56,10 +59,7 @@
 
   services.nextdns = {
     enable = true;
-    arguments = [
-      "-config"
-      "bd327e"
-    ];
+    arguments = [ "-config" nextdnsId ];
   };
 
   # Disable resolved to avoid port conflicts
