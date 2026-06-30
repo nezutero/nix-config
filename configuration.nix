@@ -13,6 +13,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./secrets.nix
   ];
 
   # Bootloader.
@@ -196,10 +197,14 @@
   # started in user sessions.
   # programs.mtr.enable = true;
   programs.hyprland.enable = true;
+
   programs.zsh.enable = true;
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+    defaultCacheTtl = 86400; # 1 day
+    maxCacheTtl = 86400;
   };
 
   nix.gc = {
