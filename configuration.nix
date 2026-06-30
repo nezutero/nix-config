@@ -1,18 +1,14 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+
 {
   config,
   pkgs,
-  lib,
   inputs,
   ...
 }:
 
-
-let
-    nextdnsId = lib.strings.removeSuffix "\n" (builtins.readFile ./nextdns-id);
-in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -57,16 +53,14 @@ in
     LC_TIME = "en_GB.UTF-8";
   };
 
-  services.nextdns = {
-    enable = true;
-    arguments = [ "-config" nextdnsId ];
-  };
-
   # Disable resolved to avoid port conflicts
   services.resolved.enable = false;
 
   # Point DNS to the local NextDNS proxy
   networking.nameservers = [ "127.0.0.1" ];
+
+  # Prevents NM from overriding nameservers
+  networking.networkmanager.dns = "none";
 
   # Configure keymap in X11
   services.xserver.xkb = {
