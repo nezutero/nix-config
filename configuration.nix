@@ -201,10 +201,12 @@
   programs.zsh.enable = true;
 
   programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    defaultCacheTtl = 86400; # 1 day
-    maxCacheTtl = 86400;
+      enable = true;
+      enableSSHSupport = true;
+      settings = {
+          default-cache-ttl = 86400;
+          max-cache-ttl = 86400;
+      };
   };
 
   nix.gc = {
