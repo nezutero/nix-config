@@ -58,13 +58,7 @@ in
   '';
 
   home.sessionPath = [
-    "$HOME/.local/bin"
     "${config.home.homeDirectory}/dotfiles/scripts"
-    "$HOME/.bun/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/.local/share/cargo/bin"
-    "$HOME/.local/share/go/bin"
-    "$HOME/go/bin"
   ];
 
   home.sessionVariables = {
