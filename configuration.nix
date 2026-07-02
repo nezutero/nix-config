@@ -88,6 +88,10 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
+    clang
+    clang-tools
+    glibc
+    lua-language-server
     wget
     kitty
     waybar
@@ -111,6 +115,7 @@
     grim
     slurp
     gimp
+    krita
     wev
     tmux
     brightnessctl
@@ -203,10 +208,6 @@
   programs.gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      settings = {
-          default-cache-ttl = 86400;
-          max-cache-ttl = 86400;
-      };
   };
 
   nix.gc = {
