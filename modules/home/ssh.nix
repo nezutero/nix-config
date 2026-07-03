@@ -1,0 +1,40 @@
+{ config, lib, pkgs, ... }:
+{
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    settings = {
+      "*" = { AddKeysToAgent = "yes"; };
+      "github.com" = {
+        HostName = "github.com";
+        User = "git";
+        IdentityFile = "~/.ssh/id_ed25519";
+      };
+    };
+  };
+
+  home.activation.sshKeygen = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    KEY="${config.home.homeDirectory}/.ssh/id_ed25519"
+
+    if [ ! -f "$KEY" ]; then
+      mkdir -p "${config.home.homeDirectory}/.ssh"
+      chmod 700 "${config.home.homeDirectory}/.ssh"
+
+      ${pkgs.openssh}/bin/ssh-keygen -q \
+        -t ed25519 \
+        -C "me@nezutero.dev" \
+        -f "$KEY" \
+        -N ""
+
+      ${pkgs.wl-clipboard}/bin/wl-copy < "$KEY.pub" 2>/dev/null || true
+
+      echo ""
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      echo "  SSH key generated (copied to clipboard)"
+      echo "  Add to GitHub: https://github.com/settings/ssh/new"
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      cat "$KEY.pub"
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    fi
+  '';
+}
