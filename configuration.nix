@@ -63,11 +63,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  # IF SWAY: swayfx wlsunset swayidle swaybg swaylock
   environment.systemPackages = with pkgs; [
     neovim clang clang-tools glibc lua-language-server wget kitty waybar
-    rofi zbar libnotify wtype swayfx niri
+    rofi zbar libnotify wtype
     (pass.withExtensions (exts: with exts; [ pass-otp ]))
-    jq swaybg dunst btop swayidle swaylock hyprsunset wl-clipboard grim
+    jq dunst btop hyprsunset wl-clipboard grim
     slurp gimp krita wev tmux brightnessctl cliphist yazi ncdu podman
     pavucontrol fastfetch imagemagick fzf eza bat rofi-bluetooth bluez
     bluez-tools jetbrains-mono gruvbox-material-gtk-theme gruvbox-plus-icons
