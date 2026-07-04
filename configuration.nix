@@ -66,7 +66,7 @@
   # IF SWAY: swayfx wlsunset swayidle swaybg swaylock
   environment.systemPackages = with pkgs; [
     neovim clang clang-tools glibc lua-language-server wget kitty waybar
-    rofi zbar libnotify wtype
+    rofi zbar libnotify wtype hyprpaper
     (pass.withExtensions (exts: with exts; [ pass-otp ]))
     jq dunst btop hyprsunset wl-clipboard grim
     slurp gimp krita wev tmux brightnessctl cliphist yazi ncdu podman
