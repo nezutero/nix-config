@@ -14,6 +14,7 @@
     ./nvim
     ./hyprland
     ./waybar
+    ./dunst.nix
     ./kitty.nix
     ./rofi.nix
     ./tmux.nix

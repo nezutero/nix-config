@@ -7,6 +7,7 @@
     settings.vim = {
       theme = {
         transparent = true;
+        name = "rose-pine";
       };
 
       lsp = {
@@ -34,7 +35,7 @@
       telescope.enable = true;
       statusline.lualine = {
         enable = true;
-        theme = "gruvbox-material";
+        theme = "gruvbox_dark";
       };
       git.gitsigns.enable = true;
       comments.comment-nvim.enable = true;

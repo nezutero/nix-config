@@ -2,17 +2,20 @@
 {
   # ── Networking ───────────────────────────────
   networking.networkmanager.enable = true;
-  networking.networkmanager.dns = "none";
   services.resolved.enable = false;
-  networking.nameservers = [ "127.0.0.1" ];
+  networking.nameservers = [ "extended.dns.mullvad.net" "194.242.2.6" ];
 
   # ── Desktop session ──────────────────────────
   services.xserver.xkb = { layout = "us"; variant = ""; };
-  programs.hyprland.enable = true;
-  services.greetd = {
+  programs.hyprland = {
     enable = true;
+    xwayland.enable = true;
+  };
+
+  services.greetd = {
+    enable = false;
     settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
       user = "greeter";
     };
   };
@@ -44,6 +47,7 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
-    config.common.default = "*";
   };
+
+  xdg.portal.config.common.default = "*";
 }
