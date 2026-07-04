@@ -65,9 +65,9 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim clang clang-tools glibc lua-language-server wget kitty waybar
-    rofi zbar libnotify wtype xwayland-satellite
+    rofi zbar libnotify wtype swayfx niri
     (pass.withExtensions (exts: with exts; [ pass-otp ]))
-    jq hyprpaper dunst btop hypridle hyprlock hyprsunset wl-clipboard grim
+    jq swaybg dunst btop swayidle swaylock hyprsunset wl-clipboard grim
     slurp gimp krita wev tmux brightnessctl cliphist yazi ncdu podman
     pavucontrol fastfetch imagemagick fzf eza bat rofi-bluetooth bluez
     bluez-tools jetbrains-mono gruvbox-material-gtk-theme gruvbox-plus-icons

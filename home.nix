@@ -145,6 +145,9 @@ in
     "alacritty".source = link "alacritty";
     "dunst".source = link "dunst";
     "rofi".source = link "rofi";
+    "swaylock".source = link "swaylock";
+    "niri".source = link "niri";
+    "sway".source = link "sway";
     "kitty".source = link "kitty";
     "tmux".source = link "tmux";
     "yazi".source = link "yazi";
@@ -171,6 +174,35 @@ in
       listenAddress = "127.0.0.1";
       port = 6600;
     };
+  };
+
+  services.swayidle = {
+    enable = true;
+
+    events = [
+      {
+        event = "before-sleep";
+        command = "${pkgs.swaylock}/bin/swaylock";
+      }
+    ];
+
+    timeouts = [
+      {
+        timeout = 600;
+        command = "${pkgs.brightnessctl}/bin/brightnessctl -e4 -s set 25%";
+        resumeCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r";
+      }
+
+      {
+        timeout = 1200;
+        command = "${pkgs.swaylock}/bin/swaylock";
+      }
+
+      {
+        timeout = 2400;
+        command = "${pkgs.systemd}/bin/systemctl suspend";
+      }
+    ];
   };
 
   programs.rmpc = {
