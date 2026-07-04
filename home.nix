@@ -107,7 +107,6 @@ in
       gbd = "git branch -D";
       gbs = "git switch";
       f = "$HOME/dotfiles/scripts/fzfman.sh";
-      cht = "$HOME/dotfiles/scripts/chtman.sh";
       timer = "$HOME/dotfiles/scripts/timer.sh";
       mnt = "udisksctl mount -b /dev/sda1";
       umnt = "udisksctl unmount -b /dev/sda1";
