@@ -1,0 +1,16 @@
+{ ... }:
+{
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      splash = false;
+      wallpaper = [
+        {
+          monitor = "eDP-1";
+          path = "/home/nezutero/walls/your_name_sky1.jpg";
+          fit_mode = "cover";
+        }
+      ];
+    };
+  };
+}

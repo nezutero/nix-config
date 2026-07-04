@@ -84,7 +84,6 @@
         mode = "n";
         key = "<leader>x";
         action = "<cmd>!chmod +x %<CR>";
-        options.silent = true;
       }
 
       # reload config
@@ -99,7 +98,6 @@
         mode = "n";
         key = "<leader>t";
         action = "<cmd>Trouble<CR>";
-        options.silent = true;
       }
 
       # disable arrows

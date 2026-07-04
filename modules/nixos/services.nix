@@ -34,4 +34,16 @@
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
   nix.optimise.dates = [ "weekly" ];
+
+  # --- NixOS-level PAM entry or you can't actually unlock
+  security.pam.services = {
+    swaylock = {};
+    hyprlock = {};
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    config.common.default = "*";
+  };
 }

@@ -1,0 +1,115 @@
+{ ... }:
+{
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        position = "bottom";
+        height = 10;
+        spacing = 3;
+
+        "modules-left" = [ "hyprland/workspaces" "custom/separator" "clock" ];
+        "modules-center" = [ ];
+        "modules-right" = [
+          "disk" "custom/separator"
+          "memory" "custom/separator"
+          "cpu" "temperature" "custom/separator"
+          "hyprland/language" "custom/separator"
+          "network" "custom/separator"
+          "bluetooth" "custom/separator"
+          "pulseaudio" "custom/separator"
+          "backlight" "custom/separator"
+          "battery"
+        ];
+
+        "hyprland/language" = {
+          "format-en" = "  EN";
+          "format-fr" = "  CA";
+        };
+
+        clock = {
+          locale = "en_GB.UTF-8";
+          format = "{:L%H:%M:%S :: %e %B, %A :: (%d/%m/%y)}";
+          "format-alt" = " {:L%H:%M:%S :: %e %B, %A}";
+          "tooltip-format" = "<big>{:L%Y %B}</big>\n<tt>{calendar}</tt>";
+          "today-format" = "<b>{}</b>";
+          interval = 1;
+          calendar = {
+            mode = "month";
+            "weeks-pos" = "";
+            "on-scroll" = 1;
+            format = {
+              months = "<span color='#7fb4ca'><b>{}</b></span>";
+              days = "<span color='#c5c9c5'>{}</span>";
+              weekdays = "<span color='#957fb8'><b>{}</b></span>";
+              today = "<span color='#e82424'><b><u>{}</u></b></span>";
+            };
+          };
+        };
+
+        cpu = { format = "CPU {usage}%"; tooltip = false; };
+        memory = { format = "RAM {}%"; };
+
+        temperature = {
+          "critical-threshold" = 80;
+          format = "{icon} {temperatureC}°C";
+          "format-icons" = [""];
+        };
+
+        backlight = {
+          "format-icons" = [ "󰃞" "󰃟" "󰃠" ];
+          format = "{icon} {percent}%";
+        };
+
+        battery = {
+          states = { good = 100; warning = 30; critical = 15; };
+          format = "{icon} {capacity}% {time} ";
+          "format-full" = "{icon} {capacity}% {time}";
+          "format-charging" = "{icon} {capacity}% {time}  ";
+          "format-plugged" = "{icon} {capacity}% {time}";
+          "format-icons" = [ "󰂎" "󰁻" "󰁾" "󰂀" "󰁹" ];
+          "format-time" = "{H}:{M}";
+        };
+
+        "battery#bat1" = { bat = "BAT1"; };
+
+        network = {
+          "format-wifi" = " ";
+          "format-ethernet" = "{ifname}: {ipaddr}/{cidr} ";
+          "format-linked" = "{ifname} (No IP) ";
+          "format-disconnected" = "󰖪 ";
+          "format-alt" = "{ifname}: {ipaddr}/{cidr}";
+          family = "ipv4";
+          "tooltip-format-wifi" = "-   {ifname} @ {essid}\n- IP: {ipaddr}\n- Strength: {signalStrength}%\n- Freq: {frequency}MHz\n-  {bandwidthUpBits}   {bandwidthDownBits}";
+          "tooltip-format-ethernet" = " {ifname}\nIP: {ipaddr}\n  {bandwidthUpBits}   {bandwidthDownBits}";
+        };
+
+        disk = { interval = 30; format = "{percentage_used}% {path}"; path = "/"; };
+
+        pulseaudio = {
+          format = "{volume}% {icon} | {format_source}";
+          "format-bluetooth" = "{volume}% {icon} () | {format_source}";
+          "format-bluetooth-muted" = "{icon} () {format_source}";
+          "format-muted" = "{format_source}";
+          "format-source" = "{volume}% ";
+          "format-source-muted" = " ";
+          "format-icons" = { default = ["" "" " "]; };
+          "on-click" = "wpctl set-mute @DEFAULT_SOURCE@ toggle";
+          "on-click-right" = "pavucontrol";
+        };
+
+        "custom/separator" = { format = "|"; interval = "once"; tooltip = false; };
+
+        bluetooth = {
+          format = "󰂯 {status}";
+          "format-disabled" = "󰂲";
+          "format-connected" = "󰂱 {num_connections}";
+          "tooltip-format" = "{controller_alias}\t{controller_address}";
+          "tooltip-format-connected" = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+          "tooltip-format-enumerate-connected" = "{device_alias}\t{device_address}";
+          "on-click" = "rofi-bluetooth";
+        };
+      };
+    };
+  };
+}

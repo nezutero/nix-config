@@ -6,7 +6,7 @@
 
     settings.vim = {
       theme = {
-        name = "kanagawa";
+        transparent = true;
       };
 
       lsp = {
@@ -27,11 +27,18 @@
       };
 
       autocomplete.nvim-cmp.enable = true;
-      treesitter.enable = true;
+      treesitter = {
+        enable = true;
+        addDefaultGrammars = true;
+      };
       telescope.enable = true;
+      statusline.lualine = {
+        enable = true;
+        theme = "gruvbox-material";
+      };
       git.gitsigns.enable = true;
-      undoFile.enable = true;
-      comments.enable = true;
+      comments.comment-nvim.enable = true;
+      utility.undotree.enable = true;
     };
   };
 }

@@ -1,42 +1,30 @@
-{ config, lib, pkgs, ... }:
-let
-  dotfiles = "${config.home.homeDirectory}/dotfiles";
-in
+{ lib, pkgs, ... }:
 {
-    imports = [
-            ./bootstrap.nix
-            ./zen-browser.nix
-            ./xdg.nix
+  imports = [
+    ./zen-browser.nix
+    ./xdg.nix
 
-            ./shell.nix
-            ./git.nix
-            ./ssh.nix
-            ./gtk.nix
-            ./mpd.nix
-            ./rmpc.nix
+    ./shell.nix
+    ./git.nix
+    ./ssh.nix
+    ./gtk.nix
+    ./rmpc.nix
+    ./scripts.nix
 
-            ./nvim
-            ./hyprland
-            ./waybar.nix
-            ./alacritty.nix
-            ./kitty.nix
-            ./dunst.nix
-            ./rofi.nix
-            ./mpv.nix
-            ./tmux.nix
-            ./yazi.nix
-            ./imv.nix
-            ./fastfetch.nix
-            ./zathura.nix
-        ];
-
-  _module.args.link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
+    ./nvim
+    ./hyprland
+    ./waybar
+    ./kitty.nix
+    ./rofi.nix
+    ./tmux.nix
+    ./zathura.nix
+    ./yazi.nix
+    ./swaylock.nix
+  ];
 
   home.username = "nezutero";
   home.homeDirectory = "/home/nezutero";
   home.stateVersion = "26.05";
-
-  home.sessionPath = [ "${dotfiles}/scripts" ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
