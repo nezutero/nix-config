@@ -7,15 +7,18 @@
 
   # ── Desktop session ──────────────────────────
   services.xserver.xkb = { layout = "us"; variant = ""; };
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
 
+  programs.niri.enable = true;
+
   services.greetd = {
     enable = false;
     settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
       user = "greeter";
     };
   };
@@ -45,9 +48,15 @@
   };
 
   xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+  enable = true;
+  extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gnome ];
+  config = {
+    hyprland.default = [ "hyprland" "gtk" ];
+    niri.default = [ "gnome" "gtk" ];
+    common.default = "*";
   };
+};
 
-  xdg.portal.config.common.default = "*";
+services.upower.enable = true;
+services.power-profiles-daemon.enable = true;
 }

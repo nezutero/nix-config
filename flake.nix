@@ -11,14 +11,17 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nvf = {
         url = "github:notashelf/nvf";
         inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia-shell = {
+        url = "github:noctalia-dev/noctalia-shell";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, zen-browser, nvf, noctalia-shell, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -33,6 +36,7 @@
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users.nezutero.imports = [
               inputs.nvf.homeManagerModules.default
+              inputs.noctalia-shell.homeModules.default
               ./modules/home
           ];
         }

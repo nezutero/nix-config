@@ -65,7 +65,7 @@
           states = { good = 100; warning = 30; critical = 15; };
           format = "{icon} {capacity}% {time} ";
           "format-full" = "{icon} {capacity}% {time}";
-          "format-charging" = "{icon} {capacity}% {time}  ";
+          "format-charging" = "{icon} {capacity}% {time}";
           "format-plugged" = "{icon} {capacity}% {time}";
           "format-icons" = [ "󰂎" "󰁻" "󰁾" "󰂀" "󰁹" ];
           "format-time" = "{H}:{M}";

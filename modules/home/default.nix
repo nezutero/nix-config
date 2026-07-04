@@ -14,6 +14,8 @@
     ./nvim
     ./hyprland
     ./waybar
+    ./noctalia
+    ./niri.nix
     ./dunst.nix
     ./kitty.nix
     ./rofi.nix

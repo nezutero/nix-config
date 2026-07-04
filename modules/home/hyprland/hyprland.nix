@@ -3,5 +3,5 @@
 {
   home.file.".config/hypr/hyprland.conf".source =
     config.lib.file.mkOutOfStoreSymlink
-      "/home/nezutero/dotfiles/hypr/hyprland.conf";
+      "/home/nezutero/nixos/modules/home/hyprland/hyprland.conf";
 }
