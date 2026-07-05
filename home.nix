@@ -44,17 +44,13 @@ in
   '';
 
   home.activation.zenBrowser = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ZEN_PROFILE="$HOME/.config/zen/zr7hisqa.Default Profile"
+    ZEN_PROFILE=$(find "$HOME/.config/zen" -maxdepth 1 -type d -name "*.Default Profile" | head -n1)
 
-    if [ -d "$ZEN_PROFILE" ]; then
+    if [ -n "$ZEN_PROFILE" ]; then
         mkdir -p "$ZEN_PROFILE/chrome"
-
-            ln -sf "$HOME/dotfiles/other/zen/user.js" \
-            "$ZEN_PROFILE/user.js"
-
-            ln -sf "$HOME/dotfiles/other/zen/chrome/userChrome.css" \
-            "$ZEN_PROFILE/chrome/userChrome.css"
-            fi
+        ln -sf "$HOME/dotfiles/other/zen/user.js" "$ZEN_PROFILE/user.js"
+        ln -sf "$HOME/dotfiles/other/zen/chrome/userChrome.css" "$ZEN_PROFILE/chrome/userChrome.css"
+    fi
   '';
 
   home.sessionPath = [
@@ -204,10 +200,6 @@ in
  #   ];
  # };
 
-  programs.rmpc = {
-    enable = true;
-  };
-
   gtk = {
     enable = true;
 
@@ -284,6 +276,4 @@ in
       "application/vnd.ms-excel" = "onlyoffice-calc.desktop";
     };
   };
-
-  xdg.configFile."mimeapps.list".force = true;
 }
