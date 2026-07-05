@@ -61,7 +61,7 @@ in
     EDITOR = "nvim";
     GIT_EDITOR = "nvim";
     VISUAL = "nvim";
-    TERMINAL = "kitty";
+    TERMINAL = "foot";
     BROWSER = "zen-beta";
   };
 
@@ -138,12 +138,12 @@ in
     "nvim".source = link "nvim";
     "hypr".source = link "hypr";
     "waybar".source = link "waybar";
-    #"alacritty".source = link "alacritty";
+    "alacritty".source = link "alacritty";
     "dunst".source = link "dunst";
     "rofi".source = link "rofi";
     #"swaylock".source = link "swaylock";
     #"sway".source = link "sway";
-    "kitty".source = link "kitty";
+    "foot".source = link "foot";
     "tmux".source = link "tmux";
     "yazi".source = link "yazi";
     "fastfetch".source = link "fastfetch";
@@ -227,7 +227,8 @@ in
 
   xdg.desktopEntries.nvim = {
     name = "Neovim";
-    exec = "kitty nvim %F";
+    exec = "nvim %F";
+    terminal = true;
     type = "Application";
     mimeType = [
       "text/plain"
@@ -240,30 +241,25 @@ in
     enable = true;
     defaultApplications = {
       "application/pdf" = "zen-beta.desktop";
-
       "image/png" = "imv.desktop";
       "image/jpeg" = "imv.desktop";
       "image/webp" = "imv.desktop";
       "image/gif" = "imv.desktop";
       "image/bmp" = "imv.desktop";
-
       "video/mp4" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";
       "video/x-msvideo" = "mpv.desktop";
       "video/quicktime" = "mpv.desktop";
       "video/webm" = "mpv.desktop";
-
       "audio/mpeg" = "rmpc.desktop";
       "audio/flac" = "rmpc.desktop";
       "audio/ogg" = "rmpc.desktop";
       "audio/wav" = "rmpc.desktop";
-
       "text/plain" = "nvim.desktop";
       "text/markdown" = "nvim.desktop";
       "application/json" = "nvim.desktop";
       "text/xml" = "nvim.desktop";
       "application/xml" = "nvim.desktop";
-
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" =
         "onlyoffice-impress.desktop";
       "application/vnd.openxmlformats-officedocument.presentationml.presentation" =
