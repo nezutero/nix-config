@@ -171,34 +171,34 @@ in
     };
   };
 
- # services.swayidle = {
- #   enable = true;
+  # services.swayidle = {
+  #   enable = true;
 
- #   events = [
- #     {
- #       event = "before-sleep";
- #       command = "${pkgs.swaylock}/bin/swaylock";
- #     }
- #   ];
+  #   events = [
+  #     {
+  #       event = "before-sleep";
+  #       command = "${pkgs.swaylock}/bin/swaylock";
+  #     }
+  #   ];
 
- #   timeouts = [
- #     {
- #       timeout = 600;
- #       command = "${pkgs.brightnessctl}/bin/brightnessctl -e4 -s set 25%";
- #       resumeCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r";
- #     }
+  #   timeouts = [
+  #     {
+  #       timeout = 600;
+  #       command = "${pkgs.brightnessctl}/bin/brightnessctl -e4 -s set 25%";
+  #       resumeCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r";
+  #     }
 
- #     {
- #       timeout = 1200;
- #       command = "${pkgs.swaylock}/bin/swaylock";
- #     }
+  #     {
+  #       timeout = 1200;
+  #       command = "${pkgs.swaylock}/bin/swaylock";
+  #     }
 
- #     {
- #       timeout = 2400;
- #       command = "${pkgs.systemd}/bin/systemctl suspend";
- #     }
- #   ];
- # };
+  #     {
+  #       timeout = 2400;
+  #       command = "${pkgs.systemd}/bin/systemctl suspend";
+  #     }
+  #   ];
+  # };
 
   gtk = {
     enable = true;
@@ -270,6 +270,90 @@ in
       "application/msword" = "onlyoffice-impress.desktop";
       "application/vnd.ms-powerpoint" = "onlyoffice-impress.desktop";
       "application/vnd.ms-excel" = "onlyoffice-calc.desktop";
+    };
+  };
+
+  systemd.user.services.protonmail-bridge = {
+    Unit.Description = "Proton Mail Bridge";
+    Service = {
+      ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --noninteractive";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = [ "default.target" ];
+  };
+
+  programs.neomutt = {
+    enable = true;
+    sidebar.enable = true;
+    settings = {
+      sort = "date";
+      index_format = "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s";
+    };
+  };
+
+  services.mbsync = {
+    enable = true;
+    frequency = "*:0/5"; # 5 min
+  };
+  programs.msmtp.enable = true;
+
+  accounts.email.accounts = {
+    univ-rennes = {
+      address = "dmytro.nesterenko@univ-rennes.fr";
+      userName = "dmytro.nesterenko@univ-rennes.fr";
+      realName = "Dmytro Nesterenko";
+      passwordCommand = "pass show mail/univ-rennes";
+
+      imap = {
+        host = "imap.partage.renater.fr";
+        port = 993;
+        tls.enable = true;
+      };
+      smtp = {
+        host = "smtp.partage.renater.fr";
+        port = 465;
+        tls.enable = true;
+      };
+
+      mbsync = {
+        enable = true;
+        create = "maildir";
+      };
+      msmtp.enable = true;
+      neomutt.enable = true;
+    };
+
+    proton = {
+      primary = true;
+      address = "me@nezutero.dev";
+      userName = "me@nezutero.dev";
+      realName = "Dmytro Nesterenko";
+      passwordCommand = "pass show mail/proton-bridge";
+
+      imap = {
+        host = "127.0.0.1";
+        port = 1143; # Bridge's default IMAP port; check with `protonmail-bridge --cli` -> `info`
+        tls = {
+          enable = true;
+          useStartTls = true; # Bridge uses STARTTLS on its local ports
+        };
+      };
+      smtp = {
+        host = "127.0.0.1";
+        port = 1025; # Bridge's default SMTP port
+        tls = {
+          enable = true;
+          useStartTls = true;
+        };
+      };
+
+      mbsync = {
+        enable = true;
+        create = "maildir";
+        extraConfig.account.CertificateFile = "~/.config/protonmail/bridge/cert.pem"; # Bridge uses a self-signed cert
+      };
+      msmtp.enable = true;
+      neomutt.enable = true;
     };
   };
 }

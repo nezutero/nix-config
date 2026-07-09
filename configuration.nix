@@ -21,7 +21,10 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   services.resolved.enable = false;
-  networking.nameservers = [ "extended.dns.mullvad.net" "194.242.2.6" ];
+  networking.nameservers = [
+    "extended.dns.mullvad.net"
+    "194.242.2.6"
+  ];
 
   # Time zone
   time.timeZone = "Europe/Paris";
@@ -45,7 +48,6 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."nezutero" = {
     isNormalUser = true;
@@ -65,18 +67,82 @@
   # $ nix search wget
   # IF SWAY: swayfx wlsunset swayidle swaybg swaylock
   environment.systemPackages = with pkgs; [
-    neovim clang clang-tools glibc lua-language-server wget waybar
-    rofi zbar libnotify wtype hyprlock foot
+    neovim
+    clang
+    clang-tools
+    glibc
+    lua-language-server
+    nil
+    wget
+    waybar
+    rofi
+    zbar
+    libnotify
+    wtype
+    hyprlock
+    foot
+    neomutt
+    protonmail-bridge
     (pass.withExtensions (exts: with exts; [ pass-otp ]))
-    jq dunst btop hyprsunset wl-clipboard grim
-    slurp gimp krita wev tmux brightnessctl cliphist yazi ncdu podman
-    pavucontrol fastfetch imagemagick fzf eza bat rofi-bluetooth bluez
-    bluez-tools jetbrains-mono gruvbox-material-gtk-theme gruvbox-plus-icons
-    zsh fd adwaita-icon-theme ripgrep imv mpv git zathura obs-studio
-    onlyoffice-desktopeditors tree docker distrobox tuigreet gcc rustc
-    python3 cargo gnupg pinentry-curses telegram-desktop signal-desktop
-    nodejs go unzip rmpc thunderbird protonmail-bridge killall
-    kanagawa-gtk-theme tor-browser
+    jq
+    dunst
+    btop
+    hyprsunset
+    wl-clipboard
+    grim
+    slurp
+    gimp
+    krita
+    wev
+    tmux
+    brightnessctl
+    cliphist
+    yazi
+    ncdu
+    podman
+    pavucontrol
+    fastfetch
+    imagemagick
+    fzf
+    eza
+    bat
+    rofi-bluetooth
+    bluez
+    bluez-tools
+    jetbrains-mono
+    gruvbox-material-gtk-theme
+    gruvbox-plus-icons
+    zsh
+    fd
+    adwaita-icon-theme
+    ripgrep
+    imv
+    mpv
+    git
+    zathura
+    obs-studio
+    onlyoffice-desktopeditors
+    tree
+    docker
+    distrobox
+    tuigreet
+    gcc
+    rustc
+    python3
+    cargo
+    gnupg
+    pinentry-curses
+    telegram-desktop
+    signal-desktop
+    nodejs
+    go
+    unzip
+    rmpc
+    thunderbird
+    protonmail-bridge
+    killall
+    kanagawa-gtk-theme
+    tor-browser
   ];
 
   nix.settings.experimental-features = [
@@ -130,10 +196,16 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   virtualisation.podman.enable = true;
-  programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [ stdenv.cc.cc.lib zlib icu ];
-
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+    icu
+  ];
 
   services.greetd = {
     enable = true;
