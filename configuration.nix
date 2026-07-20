@@ -80,6 +80,7 @@
     libnotify
     wtype
     hyprlock
+    hyprpaper
     foot
     neomutt
     protonmail-bridge
@@ -107,8 +108,6 @@
     eza
     bat
     rofi-bluetooth
-    bluez
-    bluez-tools
     jetbrains-mono
     gruvbox-material-gtk-theme
     gruvbox-plus-icons
@@ -119,6 +118,7 @@
     imv
     mpv
     git
+    calibre
     zathura
     obs-studio
     onlyoffice-desktopeditors
@@ -215,6 +215,16 @@
         user = "greeter";
       };
     };
+  };
+
+  services.udisks2.enable = true;
+  services.gvfs.enable = true; # helps GTK apps / file managers see removable media
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
   };
 
   # Before changing this value read the documentation for this option
