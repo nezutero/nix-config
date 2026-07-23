@@ -93,7 +93,6 @@
     grim
     slurp
     gimp
-    krita
     wev
     tmux
     brightnessctl
@@ -118,6 +117,7 @@
     imv
     mpv
     git
+    gdb
     calibre
     zathura
     obs-studio
@@ -193,8 +193,11 @@
   nix.optimise.dates = [ "weekly" ];
 
   # ── Background services ──────────────────────
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
+  services.blueman.enable = false;
   virtualisation.podman.enable = true;
   programs.gnupg.agent = {
     enable = true;
